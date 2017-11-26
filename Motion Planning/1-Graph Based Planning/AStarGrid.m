@@ -109,57 +109,39 @@ while true
     % Visit all of the neighbors around the current node and update the
     % entries in the map, f, g and parent arrays
     %
-    
-    
-     if(j+1<=nrows)
-        neighbor=sub2ind(size(map),j+1,i);
-        if(map(neighbor)~=2 && map(neighbor)~=3 && map(neighbor)~=5)
-            map(neighbor)=4;
-            if(g(neighbor)>(g(current)+1))
-                g(neighbor)=g(current)+1;
-                f(neighbor)=g(neighbor)+H(neighbor);
-                parent(neighbor)=current;
-            end
+     choices = [-1,0;0,1;1,0;0,-1];
+
+    for choice = 1:4
+
+        ix = choices(choice,1)+i;
+
+        jx = choices(choice,2)+j;
+
+        % Check for bounds
+
+        if ix < 1 || jx< 1 || ix> size(map,1) || jx> size(map,2)
+
+            continue;
+
         end
+
+        % Check if cell is free cell or goal cell
+
+        if map(ix, jx) == 1 || map(ix, jx) == 6
+
+            map(ix, jx) = 3;
+
+            g(ix, jx) = g(current) + 1;
+
+            f(n_i, n_j) = g(current) + H(n_i, n_j);
+
+            parent(n_i, n_j) = current;
+
+        end
+
     end
-    
-    if (j-1>0)
-        neighbor=sub2ind(size(map),j-1,i);
-        if(map(neighbor)~=2 && map(neighbor)~=3 && map(neighbor)~=5)
-            map(neighbor)=4;
-            if(g(neighbor)>(g(current)+1))
-                g(neighbor)=g(current)+1;
-                f(neighbor)=g(neighbor)+H(neighbor);
-                parent(neighbor)=current;
-            end
-        end
-    end  
-    
-    if (i+1<=ncols)
-        neighbor=sub2ind(size(map),j,i+1);
-        if(map(neighbor)~=2 && map(neighbor)~=3 && map(neighbor)~=5)
-            map(neighbor)=4;
-            if(g(neighbor)>(g(current)+1))
-                g(neighbor)=g(current)+1;
-                f(neighbor)=g(neighbor)+H(neighbor);
-                parent(neighbor)=current;
-            end
-        end
-    end  
-    
-    if (i-1>0)
-        neighbor=sub2ind(size(map),j,i-1);
-        if(map(neighbor)~=2 && map(neighbor)~=3 && map(neighbor)~=5)
-            map(neighbor)=4;
-            if(g(neighbor)>(g(current)+1))
-                g(neighbor)=g(current)+1;
-                f(neighbor)=g(neighbor)+H(neighbor);
-                parent(neighbor)=current;
-            end
-        end
-    end  
-    
-    
+
+    numExpanded = numExpanded + 1;   
     %*********************************************************************
     
     
