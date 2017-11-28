@@ -15,22 +15,21 @@ function route = GradientBasedPlanner (f, start_coords, end_coords, max_its)
 %%% All of your code should be between the two lines of stars.
 % *******************************************************************
 [gx, gy] = gradient (-f);
-route =start_coords;
+route = start_coords;
+current_pos = start_coords;
+i = 0;
+while true
+  if (i == max_its) || (norm(end_coords - current_pos) < 2)
+    break;
+    end
+    x = round(current_pos(2));
+    y = round(current_pos(1));
+    Delta = [ gx(x, y), gy(x, y)];
+    current_pos = current_pos + Delta/norm(Delta);
+    route = [route; current_pos];
+    i = i + 1;
 
-current=start_coords;
-distance=current-end_coords;
-distance=sqrt(sum(distance.*distance));
-i=0;
-while distance >=2.0 && i<max_its
-step=[gx(round(current(2)),round(current(1))),gy(round(current(2)),round(current(1)))];
-step=step/norm(step);
-current=current+step/norm(step);
-route(size(route,1)+1,:)=current;
-distance=current-end_coords;
-distance=norm(distance);
-i=i+1;
 end
-
 
 % *******************************************************************
 end
