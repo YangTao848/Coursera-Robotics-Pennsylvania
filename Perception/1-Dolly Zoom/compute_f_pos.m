@@ -23,4 +23,8 @@ h2=H1/ratio;
 pos=(H1*d2_ref-H2*d1_ref*ratio)/(H1-H2*ratio);
 f=f_ref*(d1_ref-pos)/d1_ref;
 end
-
+%%%%%%%%%%%%   my code for this problem%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+h1=H1*f_ref/d1_ref;
+h2=h1/ratio;
+pos=(H1*d2_ref-H2*d1_ref*ratio)/(H1-H2*ratio);
+f=h1*(d1_ref-pos)/H1;
