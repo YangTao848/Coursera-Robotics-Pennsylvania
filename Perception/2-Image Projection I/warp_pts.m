@@ -20,12 +20,13 @@ function [ warped_pts ] = warp_pts( video_pts, logo_pts, sample_pts)
 [ H ] = est_homography(video_pts, logo_pts);
 
 % YOUR CODE HERE
-n=size(sample_pts,1);
-
-sample_3=[sample_pts,ones(n,1)];
-
-warped_3=(H*sample_3')';
-
-warped_pts = warped_3(:,1:2);
+num_rows = size(sample_pts,1);
+Ones = ones(num_rows,1);
+sample_pts = [sample_pts Ones];
+warped_pts = sample_pts*H;
+for i = 1:num_rows
+  warped_pts(i,1:end) = warped_pts(i,:)/warped_pts(i,3);
+end
+warped_pts = warped_pts(1:end,1:2);
 end
 
