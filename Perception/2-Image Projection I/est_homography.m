@@ -10,7 +10,6 @@ function [ H ] = est_homography(video_pts, logo_pts)
 
 % YOUR CODE HERE
 A=zeros(8,9);
-
 for i=1:4
 
     x1=video_pts(i,1);
@@ -28,8 +27,7 @@ for i=1:4
 end
 
 [U,S,V]=svd(A);
+V=V';
+H=reshape(V(:,end),[3,3]);
 
-h_vec=V(:,end);
-
-H=reshape(h_vec,[3,3])';
 end
