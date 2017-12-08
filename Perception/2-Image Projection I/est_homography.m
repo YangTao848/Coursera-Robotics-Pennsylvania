@@ -9,18 +9,27 @@ function [ H ] = est_homography(video_pts, logo_pts)
 % Written for the University of Pennsylvania's Robotics:Perception course
 
 % YOUR CODE HERE
-H = [];
-n=size(video_pts,1);
-a=[];
+A=zeros(8,9);
 
-for i=1:n
-    xv=video_pts(i,:);
-    xl=logo_pts(i,:);
-    a((i-1)*2+1,:)=[-xv(1) -xv(2) -1 0 0 0 xv(1)*xl(1) xv(2)*xl(1) xl(1)];
-    a(i*2,:)=[0 0 0 -xv(1) -xv(2) -1 xv(1)*xl(2) xv(2)*xl(2) xl(2)];
+for i=1:4
+
+    x1=video_pts(i,1);
+
+    x2=video_pts(i,2);
+
+    x1p=logo_pts(i,1);
+
+    x2p=logo_pts(i,2);
+
+    A(2*i-1,:)=[-x1,-x2,-1,0,0,0,x1*x1p,x2*x1p,x1p];
+
+    A(2*i,:)=[0,0,0,-x1,-x2,-1,x1*x2p,x2*x2p,x2p];
+
 end
 
-[U, S, V] = svd(a);
-h=V(:,size(V,2));
+[U,S,V]=svd(A);
 
-H= [h(1) h(2) h(3);h(4) h(5) h(6); h(7) h(8) h(9)];
+h_vec=V(:,end);
+
+H=reshape(h_vec,[3,3])';
+end
