@@ -27,6 +27,8 @@ for i=1:4
 end
 
 [U,S,V]=svd(A);
-H=reshape(V(:,end),[3,3])';
+H=reshape(V(:,end),[3,3])';%%method 1
+% Method 2 to the warp_pts Method 2
+%H=reshape(V(:,end),[3,3])
 
 end
