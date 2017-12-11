@@ -27,7 +27,6 @@ for i=1:4
 end
 
 [U,S,V]=svd(A);
-V=V';
 H=reshape(V(:,end),[3,3]);
 
 end
